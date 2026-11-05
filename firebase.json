@@ -1,0 +1,31 @@
+{
+  "firestore": {
+    "database": "(default)",
+    "location": "asia-east2",
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "hosting": {
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "auth": {
+    "providers": {
+      "emailPassword": true,
+      "googleSignIn": {
+        "oAuthBrandDisplayName": "ICSC",
+        "supportEmail": "support@icsa-8311c.firebaseapp.com"
+      }
+    }
+  }
+}

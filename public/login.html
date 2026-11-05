@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Inmantec College</title>
+    <script>
+    (function(){var t="gold";try{if(localStorage.getItem("icsa_theme5")==="navygold")t="navygold"}catch(e){}document.documentElement.setAttribute("data-theme",t)})();
+  </script>
+  <style>
+    :root,html[data-theme="gold"]{--bg:#050403;--bg2:radial-gradient(circle at top,rgba(240,176,48,.10),transparent 38%);--card:rgba(10,10,8,.94);--line:rgba(240,176,48,.55);--text:#ffffff;--sub:#d6e4ff;--accent:#f0b030;--label:#f8d870;--link:#f8d870;
+      --btn-bg:linear-gradient(135deg,#f8d870,#d99418);--btn-text:#201500;--in-bg:rgba(255,255,255,.045);--in-line:rgba(240,176,48,.4);--in-text:#ffffff;--muted:#aeb8c5;--g-bg:rgba(255,255,255,.05);--g-line:rgba(255,255,255,.18);--g-text:#ffffff;
+      --err-t:#ffd0d0;--err-b:rgba(255,70,70,.10);--err-l:rgba(255,70,70,.35);--ok-t:#c9ffdc;--ok-b:rgba(70,255,130,.08);--ok-l:rgba(70,255,130,.30);--shadow:0 0 35px rgba(240,176,48,.12);--logo-c:#f8d870;--tb-bg:rgba(20,20,20,.8);--tb-t:#fff}
+    html[data-theme="navygold"]{--bg:#f2f6fb;--bg2:radial-gradient(circle at 90% 0%,rgba(193,152,71,.10),transparent 40%);--card:#ffffff;--line:#e3d8bb;--text:#0a1f3c;--sub:#3b4a63;--accent:#c19847;--label:#0a1f3c;--link:#8f6f26;
+      --btn-bg:#b08a3a;--btn-text:#ffffff;--in-bg:#ffffff;--in-line:#d9cba2;--in-text:#0a1f3c;--muted:#5d6b82;--g-bg:#ffffff;--g-line:#d9cba2;--g-text:#0a1f3c;
+      --err-t:#b3261e;--err-b:#fdecea;--err-l:#f2b8b5;--ok-t:#137333;--ok-b:#e6f4ea;--ok-l:#a8dab5;--shadow:0 6px 24px rgba(160,125,50,.15);--logo-c:#0a1f3c;--tb-bg:#ffffff;--tb-t:#0a1f3c}
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%}
+    body{min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:20px;font-family:"Segoe UI",Inter,Arial,sans-serif;color:var(--text);background:var(--bg2),var(--bg)}
+    .wrap{width:100%;max-width:430px;margin:auto}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:26px 28px;box-shadow:var(--shadow)}
+    .logo{width:56px;height:56px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;border-radius:50%;border:2px solid var(--accent);color:var(--logo-c);font-size:22px;font-weight:800}
+    h1{text-align:center;margin:0;color:var(--text);font-size:27px}
+    .subtitle{text-align:center;color:var(--sub);font-size:14px;margin:6px 0 18px}
+    .field{margin-bottom:12px}
+    label{display:block;margin-bottom:7px;font-size:13px;font-weight:600;color:var(--label)}
+    input{width:100%;padding:11px 14px;border:1px solid var(--in-line);border-radius:10px;outline:none;background:var(--in-bg);color:var(--in-text);font-size:14px;font-family:inherit}
+    input::placeholder{color:var(--muted)}
+    input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(193,152,71,.18)}
+    .pw{position:relative}.pw input{padding-right:56px}
+    .show{position:absolute;right:12px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:var(--link);cursor:pointer;font-size:12px;font-weight:600}
+    .forgot{display:block;text-align:right;margin-top:-6px;margin-bottom:18px;color:var(--link);font-size:13px;cursor:pointer}
+    .forgot:hover{text-decoration:underline}
+    .primary{width:100%;padding:14px;border:0;border-radius:10px;background:var(--btn-bg);color:var(--btn-text);font-size:15px;font-weight:800;cursor:pointer;font-family:inherit}
+    .primary:hover{filter:brightness(1.06)}
+    button:disabled{opacity:.6;cursor:not-allowed}
+    .divider{display:flex;align-items:center;gap:12px;margin:16px 0;color:var(--muted);font-size:12px}
+    .divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--in-line);opacity:.5}
+    .google{width:100%;padding:13px;border:1px solid var(--g-line);border-radius:10px;background:var(--g-bg);color:var(--g-text);cursor:pointer;font-size:14px;font-weight:600;font-family:inherit}
+    .google:hover{border-color:var(--accent)}
+    .switch{text-align:center;margin-top:14px;color:var(--sub);font-size:13px}
+    .switch a{color:var(--link);font-weight:700;text-decoration:none}
+    .switch a:hover{text-decoration:underline}
+    .note{margin-top:14px;color:var(--muted);font-size:12px;text-align:center}
+    #message{display:none;padding:11px 12px;margin-bottom:16px;border-radius:9px;font-size:13px;line-height:1.4}
+    #message.error{display:block;color:var(--err-t);background:var(--err-b);border:1px solid var(--err-l)}
+    #message.success{display:block;color:var(--ok-t);background:var(--ok-b);border:1px solid var(--ok-l)}
+    .tbtn{position:fixed;top:12px;right:12px;z-index:5;display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--tb-bg);color:var(--tb-t);font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+    @media(max-width:500px){.card{padding:24px 18px}.tbtn span{display:none}.tbtn{padding:9px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="logo">IC</div>
+      <h1>Welcome Back</h1>
+      <p class="subtitle">Login to your Inmantec College account</p>
+      <div id="message"></div>
+      <form id="loginForm">
+        <div class="field">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="Enter your email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <div class="pw">
+            <input type="password" id="password" placeholder="Enter your password" autocomplete="current-password" required>
+            <button type="button" class="show" id="toggle">Show</button>
+          </div>
+        </div>
+        <span class="forgot" id="forgot">Forgot Password?</span>
+        <button type="submit" class="primary" id="loginBtn">Login</button>
+      </form>
+      <div class="divider">OR</div>
+      <button type="button" class="google" id="googleBtn">Continue with Google</button>
+      <div class="switch">Don't have an account? <a href="signup.html">Create Account</a></div>
+      <div class="switch"><a href="index.html">&larr; Back to website</a></div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail }
+      from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBxmq-Vp_wHOxCwBmbT-Fgoe63BmoDlVJs",
+      authDomain: "icsa-8311c.firebaseapp.com",
+      projectId: "icsa-8311c",
+      storageBucket: "icsa-8311c.firebasestorage.app",
+      messagingSenderId: "328342120744",
+      appId: "1:328342120744:web:62559de27cfa8b2eadc81d"
+    };
+    const auth = getAuth(initializeApp(firebaseConfig));
+    const googleProvider = new GoogleAuthProvider();
+
+    const $ = id => document.getElementById(id);
+    const message = $("message");
+    const showMessage = (text, type = "error") => { message.textContent = text; message.className = type; };
+    const clearMessage = () => { message.textContent = ""; message.className = ""; };
+    const goHome = () => setTimeout(() => { window.location.href = "index.html"; }, 800);
+    function wirePasswordToggle(btnId, inputIds) {
+      $(btnId).addEventListener("click", () => {
+        const hide = $(inputIds[0]).type === "password";
+        inputIds.forEach(i => { $(i).type = hide ? "text" : "password"; });
+        $(btnId).textContent = hide ? "Hide" : "Show";
+      });
+    }
+
+    const setLoading = s => { $("loginBtn").disabled = s; $("googleBtn").disabled = s; };
+    wirePasswordToggle("toggle", ["password"]);
+
+    const LOGIN_ERRORS = {
+      "auth/invalid-credential": "Invalid email or password. If you created this account with Google, tap \"Continue with Google\", or use \"Forgot Password?\" to set a password.",
+      "auth/user-not-found": "No account found with this email.",
+      "auth/wrong-password": "Incorrect password.",
+      "auth/invalid-email": "Please enter a valid email.",
+      "auth/too-many-requests": "Too many attempts. Please try again later.",
+      "auth/user-disabled": "This account has been disabled.",
+      "auth/operation-not-allowed": "Email/Password login is not turned on in Firebase yet."
+    };
+
+    $("loginForm").addEventListener("submit", async e => {
+      e.preventDefault();
+      clearMessage();
+      const email = $("email").value.trim(), password = $("password").value;
+      if (!email || !password) { showMessage("Please enter email and password."); return; }
+      try {
+        setLoading(true);
+        await signInWithEmailAndPassword(auth, email, password);
+        showMessage("Login successful! Redirecting...", "success");
+        goHome();
+      } catch (err) {
+        console.error(err);
+        showMessage(LOGIN_ERRORS[err.code] || "Login failed. Please try again.");
+      } finally { setLoading(false); }
+    });
+
+    $("googleBtn").addEventListener("click", async () => {
+      clearMessage();
+      try {
+        setLoading(true);
+        await signInWithPopup(auth, googleProvider);
+        showMessage("Google login successful! Redirecting...", "success");
+        goHome();
+      } catch (err) {
+        console.error(err);
+        showMessage(err.code === "auth/popup-closed-by-user" ? "Google login was cancelled."
+          : err.code === "auth/operation-not-allowed" ? "Google login is not turned on in Firebase yet."
+          : "Google login failed. Please try again.");
+      } finally { setLoading(false); }
+    });
+
+    $("forgot").addEventListener("click", async () => {
+      clearMessage();
+      const email = $("email").value.trim();
+      if (!email) { showMessage("Please enter your email address first."); $("email").focus(); return; }
+      try {
+        await sendPasswordResetEmail(auth, email);
+        showMessage("Password reset email sent. Please check your inbox.", "success");
+      } catch (err) {
+        console.error(err);
+        showMessage(err.code === "auth/invalid-email" ? "Please enter a valid email." : "Unable to send password reset email.");
+      }
+    });
+  </script>
+  <button type="button" class="tbtn" id="themeToggle" aria-label="Theme badlo"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="1.2"/><circle cx="17.5" cy="10.5" r="1.2"/><circle cx="8.5" cy="7.5" r="1.2"/><circle cx="6.5" cy="12.5" r="1.2"/><path d="M12 22a10 10 0 1 1 10-10c0 2.8-2.2 3.5-4 3h-2a2 2 0 0 0-1.5 3.3c.6.8.4 3.7-2.5 3.7z"/></svg><span id="themeName"></span></button>
+  <script>
+    (function(){
+      var root=document.documentElement,name=document.getElementById("themeName"),btn=document.getElementById("themeToggle");
+      function paint(){name.textContent=root.getAttribute("data-theme")==="navygold"?"Classic Gold":"Navy + Gold"}
+      btn.onclick=function(){var t=root.getAttribute("data-theme")==="navygold"?"gold":"navygold";root.setAttribute("data-theme",t);try{localStorage.setItem("icsa_theme5",t)}catch(e){}paint()};
+      paint();
+    })();
+  </script>
+</body>
+</html>

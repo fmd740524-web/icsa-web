@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">CampusMate AI</string>
+    <string name="title_activity_main">CampusMate AI</string>
+    <string name="package_name">com.icsa.collegeassistant</string>
+    <string name="custom_url_scheme">com.icsa.collegeassistant</string>
+</resources>

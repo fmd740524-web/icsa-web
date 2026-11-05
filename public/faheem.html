@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>College Student Assistant</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #eff6ff, #ede9fe);
+            color: #1e293b;
+        }
+
+        .main-card {
+            width: 90%;
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            text-align: center;
+            color: #1d4ed8;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: #1d4ed8;
+            margin-top: 30px;
+        }
+
+        h3 {
+            margin: 10px 0 0;
+        }
+
+        p {
+            line-height: 1.6;
+        }
+
+        .question-box {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        #question {
+            flex: 1;
+            padding: 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        .send-button,
+        .complaint-button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 14px 22px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .send-button:hover,
+        .complaint-button:hover {
+            background: #1d4ed8;
+        }
+
+        #answer {
+            margin-top: 20px;
+            padding: 15px;
+            background: #eff6ff;
+            border-radius: 10px;
+            min-height: 25px;
+            white-space: pre-line;
+        }
+
+        .quick-help {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .help-button {
+            background: white;
+            border: 1px solid #dbeafe;
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            width: 100%;
+            color: #1d4ed8;
+            font-size: 15px;
+        }
+
+        .help-button:hover {
+            background: #eff6ff;
+            transform: translateY(-2px);
+        }
+
+        .complaint-box {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 15px;
+        }
+
+        .complaint-box input,
+        .complaint-box textarea,
+        .complaint-box select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        .complaint-box textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        #complaintPreview {
+            display: none;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #ffffff;
+            border: 1px solid #dbeafe;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        }
+
+        .demo-note {
+            margin-top: 25px;
+            padding: 15px;
+            background: #fff7ed;
+            border-radius: 10px;
+            color: #9a3412;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .question-box {
+                flex-direction: column;
+            }
+
+            .quick-help {
+                grid-template-columns: 1fr;
+            }
+
+            .main-card {
+                width: 95%;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="main-card">
+
+    <h1>🎓 College Student Assistant</h1>
+
+    <p style="text-align:center;">
+        Welcome to the College Student Assistant.
+        Ask questions about attendance, exams, fees, scholarships,
+        timetable and other college-related topics.
+    </p>
+
+
+    <h2>🤖 Ask Your Question</h2>
+
+    <div class="question-box">
+
+        <input
+            type="text"
+            id="question"
+            placeholder="Ask your college-related question..."
+        >
+
+        <button class="send-button" onclick="sendQuestion()">
+            Send
+        </button>
+
+    </div>
+
+    <div id="answer"></div>
+
+
+    <h2># Quick Help</h2>
+
+    <p>Choose a topic to get started.</p>
+
+    <div class="quick-help">
+
+        <button class="help-button" onclick="quickAnswer('attendance')">
+            📅 Attendance
+        </button>
+
+        <button class="help-button" onclick="quickAnswer('exams')">
+            📚 Exams & Results
+        </button>
+
+        <button class="help-button" onclick="quickAnswer('fees')">
+            💳 Fees
+        </button>
+
+        <button class="help-button" onclick="quickAnswer('scholarship')">
+            🎓 Scholarships
+        </button>
+
+        <button class="help-button" onclick="quickAnswer('timetable')">
+            🗓️ Timetable
+        </button>
+
+        <button class="help-button" onclick="quickAnswer('notices')">
+            🔔 Notices
+        </button>
+
+        <button class="help-button" onclick="quickAnswer('library')">
+            📖 Library
+        </button>
+
+        <button class="help-button" onclick="quickAnswer('complaint')">
+            💬 Complaints & Feedback
+        </button>
+
+    </div>
+
+
+    <div class="complaint-box">
+
+        <h2>💬 Complaint & Feedback</h2>
+
+        <p>
+            Submit your complaint or suggestion using the demo form below.
+        </p>
+
+
+        <label><strong>Student Name:</strong></label>
+
+        <input
+            type="text"
+            id="studentName"
+            placeholder="Enter your name"
+            oninput="updateComplaintPreview()"
+        >
+
+
+        <label><strong>Student ID:</strong></label>
+
+        <input
+            type="text"
+            id="studentId"
+            placeholder="Enter your Student ID"
+            oninput="updateComplaintPreview()"
+        >
+
+
+        <label><strong>Complaint Category:</strong></label>
+
+        <select
+            id="complaintCategory"
+            onchange="updateComplaintPreview()"
+        >
+
+            <option value="">Select complaint category</option>
+            <option value="Study / Academic">📚 Study / Academic</option>
+            <option value="Exam / Result">📝 Exam / Result</option>
+            <option value="Attendance">📅 Attendance</option>
+            <option value="Fees / Payment">💰 Fees / Payment</option>
+            <option value="Teacher / Faculty">👨‍🏫 Teacher / Faculty</option>
+            <option value="Classroom / Campus">🏫 Classroom / Campus</option>
+            <option value="Library">📚 Library</option>
+            <option value="Website / Technical Issue">💻 Website / Technical Issue</option>
+            <option value="Transport">🚌 Transport</option>
+            <option value="Canteen">🍽️ Canteen</option>
+            <option value="Cleanliness">🧹 Cleanliness</option>
+            <option value="Other">🔹 Other</option>
+
+        </select>
+
+
+        <label><strong>Complaint Subject:</strong></label>
+
+        <input
+            type="text"
+            id="studentSubject"
+            placeholder="Complaint subject"
+            oninput="updateComplaintPreview()"
+        >
+
+
+        <label><strong>Your Complaint / Suggestion:</strong></label>
+
+        <textarea
+            id="studentComplaint"
+            placeholder="Write your complaint or suggestion..."
+            oninput="updateComplaintPreview()"
+        ></textarea>
+
+
+        <label><strong>Send Complaint To:</strong></label>
+
+        <select
+            id="complaintTo"
+            onchange="updateComplaintPreview()"
+        >
+
+            <option value="">Select whom you want to contact</option>
+            <option value="Class Mentor">Class Mentor</option>
+            <option value="HOD">HOD</option>
+            <option value="College Registrar">College Registrar</option>
+
+        </select>
+
+
+        <div id="complaintPreview">
+
+            <h3 style="color:#1d4ed8;">
+                📋 Complaint Preview
+            </h3>
+
+            <p>
+                <strong>Student Name:</strong>
+                <span id="previewStudentName"></span>
+            </p>
+
+            <p>
+                <strong>Student ID:</strong>
+                <span id="previewStudentId"></span>
+            </p>
+
+            <p>
+                <strong>Category:</strong>
+                <span id="previewCategory"></span>
+            </p>
+
+            <p>
+                <strong>Subject:</strong>
+                <span id="previewSubject"></span>
+            </p>
+
+            <p>
+                <strong>Send To:</strong>
+                <span id="previewSendTo"></span>
+            </p>
+
+            <p style="margin-bottom:0;color:#475569;">
+                Ready to submit your complaint?
+            </p>
+
+        </div>
+
+
+        <button
+            class="complaint-button"
+            onclick="submitComplaint()"
+        >
+            Submit Complaint
+        </button>
+
+    </div>
+
+
+    <div class="demo-note">
+
+        ⚠️ <strong>Demo Notice:</strong>
+        This website is currently a demo.
+        The information shown here is not connected to real college systems
+        or student records.
+
+    </div>
+
+</div>
+
+
+<script>
+
+function sendQuestion() {
+
+    let question =
+        document.getElementById("question").value
+        .toLowerCase()
+        .trim();
+
+    let answer = document.getElementById("answer");
+
+    if (question.includes("attendance")) {
+
+        answer.textContent =
+        "Demo information: Attendance rules may vary by college. Please check the official college notice or contact your class mentor.";
+
+    }
+
+    else if (
+        question.includes("exam") ||
+        question.includes("result")
+    ) {
+
+        answer.textContent =
+        "Demo information: For exam dates and results, please check the official college notice or examination department.";
+
+    }
+
+    else if (question.includes("fee")) {
+
+        answer.textContent =
+        "Demo information: Fee details should be verified through the official college fee department.";
+
+    }
+
+    else if (
+        question.includes("scholarship") ||
+        question.includes("scholarships")
+    ) {
+
+        answer.textContent =
+        "Demo information: Scholarship eligibility and deadlines should be checked through the official college scholarship department.";
+
+    }
+
+    else if (question.includes("timetable")) {
+
+        answer.textContent =
+        "Demo information: Please check the official timetable notice or contact your department.";
+
+    }
+
+    else if (question.includes("notice")) {
+
+        answer.textContent =
+        "Demo information: Important notices should be checked on the official college notice board or website.";
+
+    }
+
+    else if (
+        question.includes("library") ||
+        question.includes("book")
+    ) {
+
+        answer.textContent =
+        "Demo information: Library timings and book availability should be verified with the college library.";
+
+    }
+
+    else if (
+        question.includes("complaint") ||
+        question.includes("feedback")
+    ) {
+
+        answer.textContent =
+        "Please use the Complaint & Feedback form below.";
+
+    }
+
+    else {
+
+        answer.textContent =
+        "This is a demo College Student Assistant. For verified college information, please contact the official college department.";
+
+    }
+
+}
+
+
+function quickAnswer(topic) {
+
+    let question = document.getElementById("question");
+
+    if (topic === "attendance") {
+        question.value = "What is the attendance rule?";
+    }
+
+    else if (topic === "exams") {
+        question.value = "When are the exams and results?";
+    }
+
+    else if (topic === "fees") {
+        question.value = "What are the college fees?";
+    }
+
+    else if (topic === "scholarship") {
+        question.value = "What scholarships are available?";
+    }
+
+    else if (topic === "timetable") {
+        question.value = "Where can I find the timetable?";
+    }
+
+    else if (topic === "notices") {
+        question.value = "Where can I see college notices?";
+    }
+
+    else if (topic === "library") {
+        question.value = "What are the library timings?";
+    }
+
+    else if (topic === "complaint") {
+        question.value = "How can I submit a complaint?";
+    }
+
+    sendQuestion();
+
+}
+
+
+function updateComplaintPreview() {
+
+    let studentName =
+        document.getElementById("studentName").value.trim();
+
+    let studentId =
+        document.getElementById("studentId").value.trim();
+
+    document.getElementById("previewStudentId").textContent =
+        studentId || "Not entered";
+
+    document.getElementById("previewStudentName").textContent =
+        studentName || "Not entered";
+
+    let category =
+        document.getElementById("complaintCategory").value;
+
+    let subject =
+        document.getElementById("studentSubject").value.trim();
+
+    let complaintTo =
+        document.getElementById("complaintTo").value;
+
+    document.getElementById("previewCategory").textContent =
+        category || "Not selected";
+
+    document.getElementById("previewSubject").textContent =
+        subject || "Not entered";
+
+    document.getElementById("previewSendTo").textContent =
+        complaintTo || "Not selected";
+
+
+    if (
+        studentName === "" &&
+        studentId === "" &&
+        category === "" &&
+        subject === "" &&
+        complaintTo === ""
+    ) {
+
+        document.getElementById("complaintPreview").style.display =
+            "none";
+
+        return;
+    }
+
+
+    document.getElementById("complaintPreview").style.display =
+        "block";
+
+}
+
+
+function submitComplaint() {
+
+    let name =
+        document.getElementById("studentName").value.trim();
+
+    let studentId =
+        document.getElementById("studentId").value.trim();
+
+    let category =
+        document.getElementById("complaintCategory").value;
+
+    let subject =
+        document.getElementById("studentSubject").value.trim();
+
+    let complaint =
+        document.getElementById("studentComplaint").value.trim();
+
+    let complaintTo =
+        document.getElementById("complaintTo").value;
+
+
+    if (
+        name === "" ||
+        studentId === "" ||
+        category === "" ||
+        subject === "" ||
+        complaint === "" ||
+        complaintTo === ""
+    ) {
+
+        document.getElementById("answer").textContent =
+            "Please fill all complaint details before submitting.";
+
+        return;
+    }
+
+
+    let complaintId =
+        "CMP-" + Date.now();
+
+
+    document.getElementById("answer").textContent =
+
+        "Demo complaint submitted successfully!\n\n" +
+
+        "Name: " + name + "\n" +
+
+        "Student ID: " + studentId + "\n" +
+
+        "Category: " + category + "\n" +
+
+        "Send To: " + complaintTo + "\n" +
+
+        "Subject: " + subject + "\n" +
+
+        "Complaint ID: " + complaintId;
+
+
+    document.getElementById("studentName").value = "";
+    document.getElementById("studentId").value = "";
+    document.getElementById("complaintCategory").value = "";
+    document.getElementById("studentSubject").value = "";
+    document.getElementById("studentComplaint").value = "";
+    document.getElementById("complaintTo").value = "";
+
+    updateComplaintPreview();
+
+}
+
+</script>
+
+</body>
+</html>
